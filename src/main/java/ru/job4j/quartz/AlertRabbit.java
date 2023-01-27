@@ -1,9 +1,8 @@
 package ru.job4j.quartz;
 
+import java.io.InputStream;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
-import java.io.File;
-import java.io.FileInputStream;
 import java.util.Properties;
 
 import static org.quartz.JobBuilder.*;
@@ -12,12 +11,14 @@ import static org.quartz.SimpleScheduleBuilder.*;
 
 public class AlertRabbit {
     public static void main(String[] args) {
+        Properties prs = readProperty();
+        int timing = Integer.parseInt(prs.getProperty("rabbit.interval"));
         try {
             Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
             scheduler.start();
             JobDetail job = newJob(Rabbit.class).build();
             SimpleScheduleBuilder times = simpleSchedule()
-                    .withIntervalInSeconds(readInt())
+                    .withIntervalInSeconds(timing)
                     .repeatForever();
             Trigger trigger = newTrigger()
                     .startNow()
@@ -36,16 +37,14 @@ public class AlertRabbit {
         }
     }
 
-    static private int readInt() {
+    static private Properties readProperty() {
         final Properties prs = new Properties();
-        try {
-            File file = new File(".\\src\\main\\resources\\rabbit.properties");
-            FileInputStream is = new FileInputStream(file);
+        try (InputStream is = AlertRabbit.class.getClassLoader().getResourceAsStream("rabbit.properties")) {
             prs.load(is);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return Integer.parseInt(prs.getProperty("rabbit.interval"));
+        return prs;
     }
 
 }
