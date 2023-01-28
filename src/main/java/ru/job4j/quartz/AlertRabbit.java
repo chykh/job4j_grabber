@@ -35,8 +35,7 @@ public class AlertRabbit {
             try (Statement statement = connection.createStatement()) {
                 String sql = "insert into rabbit values (" + System.currentTimeMillis() + ");";
                 statement.execute(sql);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
