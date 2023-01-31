@@ -34,6 +34,7 @@ public class AlertRabbit {
             Connection connection = (Connection) context.getJobDetail().getJobDataMap().get("connection");
             try (PreparedStatement statement = connection.prepareStatement("insert into rabbit values (?);")) {
                 statement.setLong(1, System.currentTimeMillis());
+                statement.execute();
             } catch (Exception e) {
                 e.printStackTrace();
             }
