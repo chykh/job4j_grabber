@@ -5,7 +5,7 @@ import org.quartz.impl.StdSchedulerFactory;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.Statement;
+import java.sql.PreparedStatement;
 import java.util.Properties;
 import static org.quartz.JobBuilder.*;
 import static org.quartz.TriggerBuilder.*;
@@ -32,9 +32,8 @@ public class AlertRabbit {
         public void execute(JobExecutionContext context) {
             System.out.println("Rabbit runs here ...");
             Connection connection = (Connection) context.getJobDetail().getJobDataMap().get("connection");
-            try (Statement statement = connection.createStatement()) {
-                String sql = "insert into rabbit values (" + System.currentTimeMillis() + ");";
-                statement.execute(sql);
+            try (PreparedStatement statement = connection.prepareStatement("insert into rabbit values (?);")) {
+                statement.setLong(1, System.currentTimeMillis());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -47,16 +46,15 @@ public class AlertRabbit {
         String url = prs.getProperty("jdbc.url");
         String login = prs.getProperty("jdbc.username");
         String password = prs.getProperty("jdbc.password");
-
+        int interval = Integer.parseInt(prs.getProperty("rabbit.interval"));
         try (Connection connection = DriverManager.getConnection(url, login, password)) {
             Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
             scheduler.start();
             JobDataMap data = new JobDataMap();
             data.put("connection", connection);
-
             JobDetail job = newJob(Rabbit.class).usingJobData(data).build();
             SimpleScheduleBuilder times = simpleSchedule()
-                    .withIntervalInSeconds(5)
+                    .withIntervalInSeconds(interval)
                     .repeatForever();
             Trigger trigger = newTrigger()
                     .startNow()
@@ -69,5 +67,4 @@ public class AlertRabbit {
             se.printStackTrace();
         }
     }
-
 }
