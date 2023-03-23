@@ -67,4 +67,13 @@ public class Post {
     public int hashCode() {
         return Objects.hash(id, link);
     }
+
+    @Override
+    public String toString() {
+        return "id= " + id
+                + "\ntitle = '" + title
+                + "\nlink = '" + link
+                + "\ndescription = " + description
+                + "\ncreated = " + created + "\n";
+    }
 }
