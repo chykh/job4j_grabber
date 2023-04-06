@@ -65,27 +65,3 @@ public class HabrCareerParse  implements Parse {
         vacancies.forEach(System.out::println);
     }
 }
-
-
-
-
-/*public static void main(String[] args) throws IOException {
-        for (int i = 1; i <= 5; i++) {
-            System.out.println("\nPAGE " + i);
-            Jsoup.connect(PAGE_LINK + i).get().select(".vacancy-card__inner").forEach(row -> {
-                Element titleElement = row.select(".vacancy-card__title").first();
-                Element linkElement = titleElement.child(0);
-                String vacancyName = titleElement.text();
-                String link = String.format("%s%s", SOURCE_LINK, linkElement.attr("href"));
-
-                Element dateElement = row.select(".vacancy-card__date").first();
-                String date = dateElement.child(0).attr("datetime");
-                HabrCareerDateTimeParser hcdtp = new HabrCareerDateTimeParser();
-                LocalDateTime lcd = hcdtp.parseDate(date);
-                System.out.printf("%s %s %s%n", vacancyName, link, lcd);
-                System.out.println(HabrCareerParse.retrieveDescription(link) + "\n");
-            });
-        }
-    }
-
- */
