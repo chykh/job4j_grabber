@@ -28,13 +28,16 @@ public class PsqlStore implements Store {
     @Override
     public void save(Post post) {
         try (PreparedStatement statement = cnn.prepareStatement(
-                "insert into PsqlStore values (?,?,?,?,?) on conflict (id) do nothing;")) {
-            statement.setLong(1, post.getId());
-            statement.setString(2, post.getTitle());
-            statement.setString(3, post.getLink());
-            statement.setString(4, post.getDescription());
-            statement.setObject(5, post.getCreated());
+                "insert into PsqlStore(title, link, description, created) values (?,?,?,?) on conflict (link) do nothing;")) {
+            statement.setString(1, post.getTitle());
+            statement.setString(2, post.getLink());
+            statement.setString(3, post.getDescription());
+            statement.setObject(4, post.getCreated());
             statement.execute();
+            ResultSet genKeys = statement.getGeneratedKeys();
+            if (genKeys.next()) {
+                post.setId(genKeys.getInt(1));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
