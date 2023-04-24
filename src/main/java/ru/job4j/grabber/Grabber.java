@@ -3,16 +3,14 @@ package ru.job4j.grabber;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 import ru.job4j.grabber.utils.HabrCareerDateTimeParser;
-
 import java.io.*;
 import java.util.Properties;
-
 import static org.quartz.JobBuilder.newJob;
 import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
 import static org.quartz.TriggerBuilder.newTrigger;
 
-public class Grabber implements Grab { //quartz для запуска парсера.
-    private final Parse parse; //Операция извлечения данных с  сайта описывается отдельным интерфейсом.
+public class Grabber implements Grab {
+    private final Parse parse;
     private final Store store;
     private final Scheduler scheduler;
     private final int time;
@@ -48,18 +46,23 @@ public class Grabber implements Grab { //quartz для запуска парсе
             JobDataMap map = context.getJobDetail().getJobDataMap();
             Store store = (Store) map.get("store");
             Parse parse = (Parse) map.get("parse");
-            /* TODO impl logic */
+            try {
+                var list = parse.list("https://career.habr.com/vacancies/java_developer?page=");
+                for (Post post : list) {
+                    store.save(post);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-//приложение должно по расписанию парсить сайт career.ru. Результаты парсинга необходимо хранить в базу данных PostgreSQL.
     public static void main(String[] args) throws Exception {
         var cfg = new Properties();
         try (InputStream in = Grabber.class.getClassLoader()
                 .getResourceAsStream("app.properties")) {
             cfg.load(in);
         }
-
         Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
         scheduler.start();
         var parse = new HabrCareerParse(new HabrCareerDateTimeParser());
