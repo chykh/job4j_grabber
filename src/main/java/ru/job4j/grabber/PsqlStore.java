@@ -3,14 +3,11 @@ package ru.job4j.grabber;
 import java.io.InputStream;
 import java.sql.*;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
 public class PsqlStore implements Store {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-   // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.nn");
 
     private final Connection cnn;
 
@@ -66,7 +63,7 @@ public class PsqlStore implements Store {
                     post.setTitle(resultSet.getString("title"));
                     post.setLink(resultSet.getString("link"));
                     post.setDescription(resultSet.getString("description"));
-                    post.setCreated(LocalDateTime.parse(resultSet.getString("created"), formatter));
+                    post.setCreated(resultSet.getTimestamp("created").toLocalDateTime());
                     posts.add(post);
                 }
             }
