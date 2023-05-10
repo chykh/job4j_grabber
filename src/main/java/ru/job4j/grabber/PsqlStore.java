@@ -9,8 +9,7 @@ import java.util.List;
 import java.util.Properties;
 
 public class PsqlStore implements Store {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-   // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.nn");
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.nn");
 
     private final Connection cnn;
 
