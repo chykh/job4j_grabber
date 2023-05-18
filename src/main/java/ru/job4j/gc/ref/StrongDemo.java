@@ -7,8 +7,8 @@ import java.util.concurrent.TimeUnit;
 public class StrongDemo {
 
     public static void main(String[] args) throws InterruptedException {
-        //example1();
-        //example2();
+        example1();
+        example2();
         example3();
     }
 
@@ -26,7 +26,7 @@ public class StrongDemo {
             objects[i] = null;
         }
         System.gc();
-        //TimeUnit.SECONDS.sleep(500);
+        TimeUnit.SECONDS.sleep(500);
     }
 
     private static void example2() throws InterruptedException {
