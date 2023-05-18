@@ -37,5 +37,4 @@ public class RefDemo {
         System.out.println(weak.get());
         System.out.println(soft.get());
     }
-
 }
