@@ -22,7 +22,7 @@ public class Cinema3DTest {
         assertThat(ticket).isEqualTo(new Ticket3D());
     }
 
-    @Test //проверка несуществующего аккаунта
+    @Test
     public void whenBuyNullAccountThenMistake() {
         Account account = null;
         Cinema cinema = new Cinema3D();
@@ -31,7 +31,7 @@ public class Cinema3DTest {
         assertThat(ticket).isNotEqualTo(new Ticket3D());
     }
 
-    @Test //проверка некорректной даты
+    @Test
     public void whenBuyWrongDateThenMistake() {
         Account account = new AccountCinema();
         Cinema cinema = new Cinema3D();
@@ -49,7 +49,7 @@ public class Cinema3DTest {
                 isInstanceOf(IllegalArgumentException.class);
     }
 
-    @Test  //проверка несуществующей колонки
+    @Test
     public void whenBuyOnInvalidColumnThenGetException() {
         Account account = new AccountCinema();
         Cinema cinema = new Cinema3D();
