@@ -10,14 +10,13 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import static org.assertj.core.api.Assertions.assertThat;
 
-
 class ReportProgrammersTest {
 
     @Test
-    void WhenFilesEqual() {
+    void whenFilesEqual() {
         File expected = new File("src\\main\\resources\\reportProgrammersExpected.csv");
         MemStore store = new MemStore();
-        Calendar calendar = new GregorianCalendar(12, Calendar.DECEMBER, 12, 12,12,12);
+        Calendar calendar = new GregorianCalendar(12, Calendar.DECEMBER, 12, 12, 12, 12);
         DateTimeParser<Calendar> parser = new ReportDateTimeParser();
         Employee worker1 = new Employee("Ivan", calendar, calendar, 100);
         Employee worker2 = new Employee("Kirill", calendar, calendar,20);
