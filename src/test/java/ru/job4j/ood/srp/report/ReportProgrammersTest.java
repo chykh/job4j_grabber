@@ -19,7 +19,7 @@ class ReportProgrammersTest {
         Calendar calendar = new GregorianCalendar(12, Calendar.DECEMBER, 12, 12, 12, 12);
         DateTimeParser<Calendar> parser = new ReportDateTimeParser();
         Employee worker1 = new Employee("Ivan", calendar, calendar, 100);
-        Employee worker2 = new Employee("Kirill", calendar, calendar,20);
+        Employee worker2 = new Employee("Kirill", calendar, calendar, 20);
         Employee worker3 = new Employee("Pavel", calendar, calendar, 100500);
         Employee worker4 = new Employee("Anna", calendar, calendar, 700);
         store.add(worker1);
