@@ -9,6 +9,6 @@ public class ReportDateTimeParser implements DateTimeParser<Calendar> {
 
     @Override
     public String parse(Calendar calendar) {
-        return DATE_FORMAT.format(calendar.getTime());
+         return DATE_FORMAT.format(calendar.getTime());
     }
 }

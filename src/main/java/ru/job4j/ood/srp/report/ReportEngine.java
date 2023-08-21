@@ -3,7 +3,6 @@ package ru.job4j.ood.srp.report;
 import ru.job4j.ood.srp.formatter.DateTimeParser;
 import ru.job4j.ood.srp.model.Employee;
 import ru.job4j.ood.srp.store.Store;
-
 import java.util.Calendar;
 import java.util.function.Predicate;
 
@@ -14,6 +13,11 @@ public class ReportEngine implements Report {
     public ReportEngine(Store store, DateTimeParser<Calendar> dateTimeParser) {
         this.store = store;
         this.dateTimeParser = dateTimeParser;
+    }
+
+    @Override
+    public String generate() {
+        return null;
     }
 
     @Override
