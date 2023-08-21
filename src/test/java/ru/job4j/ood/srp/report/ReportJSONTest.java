@@ -22,17 +22,17 @@ class ReportJSONTest {
         Report engine = new ReportJSON(store, parser, condition -> true);
         String time = parser.parse(now);
         String ls = System.lineSeparator();
-        String expected = "[ {" + ls +
-                "  \"name\" : \"Ivan\"," + ls +
-                "  \"hired\" : \"" + time + "\"," + ls +
-                "  \"fired\" : \"" + time + "\"," + ls +
-                "  \"salary\" : 100.0" + ls +
-                "}, {" + ls +
-                "  \"name\" : \"Aleksei\"," + ls +
-                "  \"hired\" : \"" + time + "\"," + ls +
-                "  \"fired\" : \"" + time + "\"," + ls +
-                "  \"salary\" : 200.0" + ls +
-                "} ]" ;
+        String expected = "[ {" + ls
+                + "  \"name\" : \"Ivan\"," + ls
+                + "  \"hired\" : \"" + time + "\"," + ls
+                + "  \"fired\" : \"" + time + "\"," + ls
+                + "  \"salary\" : 100.0" + ls
+                + "}, {" + ls
+                + "  \"name\" : \"Aleksei\"," + ls
+                + "  \"hired\" : \"" + time + "\"," + ls
+                + "  \"fired\" : \"" + time + "\"," + ls
+                + "  \"salary\" : 200.0" + ls
+                + "} ]";
         assertEquals(expected, engine.generate());
     }
 }

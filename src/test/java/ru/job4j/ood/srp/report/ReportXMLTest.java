@@ -24,20 +24,20 @@ class ReportXMLTest {
         Report engine = new ReportXML(store, parser, condition -> true);
         String time = parser.parse(now);
         String ls = "\n";
-        String expected =   "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" + ls +
-                            "<employee>" + ls +
-                            "    <name>Ivan</name>" + ls +
-                            "    <hired>" + time + "</hired>" + ls +
-                            "    <fired>" + time + "</fired>" + ls +
-                            "    <salary>100.0</salary>" + ls +
-                            "</employee>" + ls +
-                            "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" + ls +
-                            "<employee>" + ls +
-                            "    <name>Vovan</name>" + ls +
-                            "    <hired>" + time + "</hired>" + ls +
-                            "    <fired>" + time + "</fired>" + ls +
-                            "    <salary>200.0</salary>" + ls +
-                            "</employee>" + ls;
+        String expected =   "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" + ls
+                +           "<employee>" + ls
+                +           "    <name>Ivan</name>" + ls
+                +           "    <hired>" + time + "</hired>" + ls
+                +           "    <fired>" + time + "</fired>" + ls
+                +           "    <salary>100.0</salary>" + ls
+                +           "</employee>" + ls
+                +           "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" + ls
+                +           "<employee>" + ls
+                +           "    <name>Vovan</name>" + ls
+                +           "    <hired>" + time + "</hired>" + ls
+                +           "    <fired>" + time + "</fired>" + ls
+                +           "    <salary>200.0</salary>" + ls
+                +           "</employee>" + ls;
         assertEquals(expected, engine.generate());
     }
 }
