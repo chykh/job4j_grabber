@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Trash extends AbstractStore {
-    List<Food> trash = new ArrayList<>();
+    private List<Food> trash = new ArrayList<>();
 
     public boolean select(Food food) {
         boolean flag = food.getFreshness() < 0;

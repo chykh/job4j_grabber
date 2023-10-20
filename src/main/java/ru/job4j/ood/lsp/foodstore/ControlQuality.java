@@ -3,8 +3,8 @@ package ru.job4j.ood.lsp.foodstore;
 import java.util.List;
 
 public class ControlQuality {
-    List<Store> stores;
-    List<Food> foods;
+    private List<Store> stores;
+    private List<Food> foods;
 
     ControlQuality() {
         this.stores = Init.getStores();

@@ -2,8 +2,8 @@ package ru.job4j.ood.lsp.foodstore;
 import java.util.List;
 
 abstract public class AbstractStore implements Store {
-    List<Store> stores;
-    List<Food> foods;
+    private List<Store> stores;
+    private List<Food> foods;
 
     public void init() {
         stores = Init.getStores();

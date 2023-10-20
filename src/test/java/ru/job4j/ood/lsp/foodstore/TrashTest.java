@@ -16,7 +16,7 @@ class TrashTest {
     Store wareHouse = new WareHouse();
     Store shop = new Shop();
     Store trash = new Trash();
-    List<Store> stores = Arrays.asList(trash);
+    private List<Store> stores = Arrays.asList(trash);
 
     Food apple = new Food("apple", LocalDate.parse("2023-10-10"),
             LocalDate.parse("2023-12-30"), 70, 0);
