@@ -1,8 +1,8 @@
 /*
-        parking.add(car1); //запускает ParkingService.check(), заносит в PassengerCar.List<Car>
-        parking.add(car2); //запускает ParkingService.check(), заносит в PassengerCar.List<Car>
-        parking.add(car3); //запускает ParkingService.check(), заносит в Truck.List<Car>
-        parking.add(car3); //запускает ParkingService.check(), заносит в PassengerCar.List<Car>, тк Truck.List<Car> заполнен
+        parking.add(car1); запускает ParkingService.check(), заносит в PassengerCar.List<Car>
+        parking.add(car2); запускает ParkingService.check(), заносит в PassengerCar.List<Car>
+        parking.add(car3); запускает ParkingService.check(), заносит в Truck.List<Car>
+        parking.add(car3); запускает ParkingService.check(), заносит в PassengerCar.List<Car>, тк Truck.List<Car> заполнен
  */
 
 package ru.job4j.ood.lsp.parking;
