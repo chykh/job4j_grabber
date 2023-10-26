@@ -1,43 +1,104 @@
-/*
-        parking.add(car1); запускает ParkingService.check(), заносит в PassengerCar.List<Car>
-        parking.add(car2); запускает ParkingService.check(), заносит в PassengerCar.List<Car>
-        parking.add(car3); запускает ParkingService.check(), заносит в Truck.List<Car>
-        parking.add(car3); запускает ParkingService.check(), заносит в PassengerCar.List<Car>, тк Truck.List<Car> заполнен
- */
-
 package ru.job4j.ood.lsp.parking;
+
 import org.junit.jupiter.api.Test;
-import java.time.LocalDate;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 class ParkingServiceTest {
-    Car car1 = new PassengerCar("a123", 1, LocalDate.parse("2023-09-12"));
-    Car car2 = new PassengerCar("a456", 1, LocalDate.parse("2023-09-24"));
-    Car car3 = new Truck("a789", 2, LocalDate.parse("2023-11-01"));
-    Car car4 = new Truck("b563", 2, LocalDate.parse("2023-08-01"));
-
-    Parking parking = new Parking1(6, 1, new ParkingService());
-    parking.add(car1);
-    parking.add(car2);
-    parking.add(car3);
-    parking.add(car3);
-
-    @Test
-    void getCarCheck() {
-        AssertEquauls(Parking1.getCar("a123"), car1);
-    }
-
-        @Test
-    void getListCheck() {
-        AssertEquauls(Parking1.getList(car1), "PassengerCar");
-        AssertEquauls(Parking1.getList(car2), "PassengerCar");
-        AssertEquauls(Parking1.getList(car3), "Truck");
-        AssertEquauls(Parking1.getList(car4), "PassengerCar");
-    }
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    Car car1 = new PassengerCar("L1-01", LocalDateTime.parse("1986-04-08 12:30", formatter));
+    Car car2 = new PassengerCar("L1-02", LocalDateTime.parse("1986-04-08 12:30", formatter));
+    Car car3 = new PassengerCar("L1-03", LocalDateTime.parse("1986-04-08 12:30", formatter));
+    Car car4 = new PassengerCar("L1-04", LocalDateTime.parse("1986-04-08 12:30", formatter));
+    Car car5 = new Truck("G1-01", 2, LocalDateTime.parse("1986-04-08 12:30", formatter));
+    Car car6 = new Truck("G1-02", 4, LocalDateTime.parse("1986-04-08 12:30", formatter));
+    Car car7 = new Truck("G1-03", 2, LocalDateTime.parse("1986-04-08 12:30", formatter));
+    Car car8 = new Truck("G1-04", 3, LocalDateTime.parse("1986-04-08 12:30", formatter));
 
     @Test
-    void removeCheck() {
-        Parking1.removeCar("a123");
-        AssertEquauls(Parking1.getList(car1), "Машина не найдена");
+    public void whenStandartPartParking() throws Exception {
+        Parking parking1 = new Parking1(4, 4);
+        ParkingService ps = new ParkingService(parking1);
+        car1.select(parking1);
+        car2.select(parking1);
+        car5.select(parking1);
+        car6.select(parking1);
+        car7.select(parking1);
+        assertThat(ps.getPassPlaces()).isEqualTo("На легковой парковке: занято 2 мест, свободно 2 мест");
+        assertThat(ps.getTruckPlaces()).isEqualTo("На грузовой парковке: занято 3 мест, свободно 1 мест");
     }
+
+    @Test
+    public void whenStandartFullParking() throws Exception {
+        Parking parking1 = new Parking1(4, 4);
+        ParkingService ps = new ParkingService(parking1);
+        car1.select(parking1);
+        car2.select(parking1);
+        car3.select(parking1);
+        car4.select(parking1);
+        car5.select(parking1);
+        car6.select(parking1);
+        car7.select(parking1);
+        car8.select(parking1);
+        assertThat(ps.getPassPlaces()).isEqualTo("На легковой парковке: занято 4 мест, свободно 0 мест");
+        assertThat(ps.getTruckPlaces()).isEqualTo("На грузовой парковке: занято 4 мест, свободно 0 мест");
+    }
+
+    @Test
+    public void whenSpecialParking() throws Exception {
+        Parking parking1 = new Parking1(10, 2);
+        ParkingService ps = new ParkingService(parking1);
+        car1.select(parking1);
+        car2.select(parking1);
+        car3.select(parking1);
+        car4.select(parking1);
+        car5.select(parking1);
+        car6.select(parking1);
+        car7.select(parking1);
+        car8.select(parking1);
+        assertThat(ps.getPassPlaces()).isEqualTo("На легковой парковке: занято 6 мест, свободно 1 мест");
+        assertThat(ps.getTruckPlaces()).isEqualTo("На грузовой парковке: занято 2 мест, свободно 0 мест");
+    }
+
+    @Test
+    public void whenRefillParking() throws Exception {
+        Parking parking1 = new Parking1(4, 2);
+        ParkingService ps = new ParkingService(parking1);
+        car1.select(parking1);
+        car2.select(parking1);
+        car3.select(parking1);
+        car4.select(parking1);
+        car5.select(parking1);
+        car6.select(parking1);
+        assertThat(ps.getPassPlaces()).isEqualTo("На легковой парковке: занято 4 мест, свободно 0 мест");
+        assertThat(ps.getTruckPlaces()).isEqualTo("На грузовой парковке: занято 2 мест, свободно 0 мест");
+        Throwable thrown = catchThrowable(() -> car7.select(parking1));
+        assertThat(thrown).isInstanceOf(Exception.class);
+    }
+
+    @Test
+    public void whenZLeaveParking() throws Exception {
+        Parking parking1 = new Parking1(10, 2);
+        ParkingService ps = new ParkingService(parking1);
+        car1.select(parking1);
+        car2.select(parking1);
+        car3.select(parking1);
+        car4.select(parking1);
+        car5.select(parking1);
+        car6.select(parking1);
+        car7.select(parking1);
+        car8.select(parking1);
+        assertThat(ps.getPassPlaces()).isEqualTo("На легковой парковке: занято 6 мест, свободно 1 мест");
+        assertThat(ps.getTruckPlaces()).isEqualTo("На грузовой парковке: занято 2 мест, свободно 0 мест");
+        parking1.specialRemove(car7);
+        parking1.specialRemove(car8);
+        assertThat(ps.getPassPlaces()).isEqualTo("На легковой парковке: занято 4 мест, свободно 6 мест");
+        assertThat(ps.getTruckPlaces()).isEqualTo("На грузовой парковке: занято 2 мест, свободно 0 мест");
+        parking1.removeTruck(car6);
+        parking1.removePassCar(car2);
+        assertThat(ps.getPassPlaces()).isEqualTo("На легковой парковке: занято 3 мест, свободно 7 мест");
+        assertThat(ps.getTruckPlaces()).isEqualTo("На грузовой парковке: занято 1 мест, свободно 1 мест");
+    }
+
 }
